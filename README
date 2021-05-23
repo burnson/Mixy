@@ -1,0 +1,72 @@
+Mixy is a Mac OS X application (10.6+) for matrix-mixing audio from input
+devices to an output device.
+
+It consists of a front-end called Mixy.app that gets and retrieves settings and
+state from a process that runs in the background under the root user called
+MixyServer.
+
+MixyServer runs at the service level and starts with the login window. If the
+process terminates or is killed, the OS will automatically restart it. The only
+way to stop MixyServer is to run the UninstallBackground.sh script which
+actually deactivates the service.
+
+Building from Scratch
+---------------------
+
+1) Install Introjucer from JUCE website to Applications folder
+
+2) Go to Installer directory and run Install.sh
+    * This will open each configuration in Introjucer, save the Xcode project,
+    and build the applications. It will then install the projects to the
+    Applications folder.
+
+Settings
+--------
+
+Mixy keeps settings on your computer in a common location to all users owned by
+the root user.
+
+Mixy will store settings in:
+/Users/Shared/Mixy.settings
+
+Mixy will store logs in:
+/Users/Shared/Mixy.log
+
+You can view the log in real-time:
+tail -f /Users/Shared/Mixy.log
+
+Audio Device Snafus
+-------------------
+
+Mixy (the graphic front-end) does not know anything about the audio system
+directly. It gets all of its information from MixyServer. If there is a problem,
+you will want to restart MixyServer.
+
+Since MixyServer runs as a service, it reboots automatically if it terminates.
+To kill it, you can force quit the app in Activity Monitor or enter this in the
+Terminal:
+sudo killall MixyServer
+
+When MixyServer begins, it polls for audio devices. It does not poll for audio
+devices while the process is running. Therefore, if an audio device disappears
+or is reinitialized (as can happen with some virtual audio devices), MixyServer
+will need to be restarted. This will happen automatically when the computer
+restarts, or by force-quitting as per above instructions.
+
+Since Mixy gets all its audio device information from MixyServer, it is possible
+it will ask MixyServer to do something that is no longer possible, like switch
+to a device that is no longer available. In this situation, MixyServer will
+first try the new device to see if it can get access to it. If it can not, it
+will automatically revert to the previous settings. If the previous settings are
+not available anymore either, then the server enters a suspended state for 15
+seconds and then restarts itself automatically.
+
+If things are very strange, this is how you would 'reset':
+* Close the Mixy app if you have it up.
+* Go to Applications/Mixy/Installer and click the InstallBackground script
+  * After authenticating, it will remove the old settings and reinitialize the
+  server.
+* Then open the Mixy app. It should have the default settings:
+  - Built-in Microphone
+  - Built-in Output
+  - 44100

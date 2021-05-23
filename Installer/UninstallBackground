@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#Change to the directory of this script.
+cd /Applications/Mixy/Installer
+
+echo "* Uninstalling any existing MixyServer background application..."
+
+#Kill the Mixy front-end first
+sudo killall Mixy &> /dev/null
+
+#Unload the job immediately.
+sudo launchctl unload -w /Library/LaunchDaemons/com.andibrae.MixyServer.plist &> /dev/null
+
+#Remove the LaunchDaemon plist to prevent Mixy from starting again.
+sudo rm -f /Library/LaunchDaemons/com.*.MixyServer.plist
+
+#Mixy settings.
+sudo rm -f /Users/Shared/Mixy.settings

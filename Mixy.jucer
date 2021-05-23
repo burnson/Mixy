@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="lZRx7O" name="Mixy" projectType="guiapp" version="1.0.0"
+              bundleIdentifier="com.andibrae.Mixy" jucerVersion="3.1.0">
+  <MAINGROUP id="h0TVgd" name="Mixy">
+    <GROUP id="{3D84E2B7-F78A-BE51-01C4-54EB4637ED8D}" name="Resources">
+      <FILE id="KyY2WU" name="Icon.png" compile="0" resource="1" file="Resources/Icon.png"/>
+    </GROUP>
+    <GROUP id="{1206F1C6-64FB-F962-0CFA-997C2370B122}" name="Source">
+      <FILE id="S4zYIF" name="MixyWindow.cpp" compile="1" resource="0" file="Source/MixyWindow.cpp"/>
+      <FILE id="G2Qc3H" name="MixyWindow.h" compile="0" resource="0" file="Source/MixyWindow.h"/>
+      <FILE id="xRoosY" name="Mixy.cpp" compile="1" resource="0" file="Source/Mixy.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_gui_audio" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="1"/>
+  </MODULES>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX" juceFolder="JUCE/modules" smallIcon="KyY2WU"
+               bigIcon="KyY2WU">
+      <CONFIGURATIONS>
+        <CONFIGURATION name="Debug" osxSDK="default" osxCompatibility="10.6 SDK" osxArchitecture="64BitIntel"
+                       isDebug="1" optimisation="1" targetName="Mixy"/>
+        <CONFIGURATION name="Release" osxSDK="default" osxCompatibility="10.6 SDK" osxArchitecture="64BitIntel"
+                       isDebug="0" optimisation="2" targetName="Mixy"/>
+      </CONFIGURATIONS>
+    </XCODE_MAC>
+  </EXPORTFORMATS>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>

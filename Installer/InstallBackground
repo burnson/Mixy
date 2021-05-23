@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#Change to the directory of this script.
+cd /Applications/Mixy/Installer
+
+###Uninstall###
+
+#Uninstall the current Mixy if it is running.
+echo "* Uninstalling any existing MixyServer background application..."
+
+#Kill the Mixy front-end first
+sudo killall Mixy &> /dev/null
+
+#Unload the job immediately.
+sudo launchctl unload -w /Library/LaunchDaemons/com.andibrae.MixyServer.plist &> /dev/null
+
+#Remove the LaunchDaemon plist to prevent Mixy from starting again.
+sudo rm -f /Library/LaunchDaemons/com.*.MixyServer.plist
+
+#Mixy settings.
+sudo rm -f /Users/Shared/Mixy.settings
+
+###Uninstall###
+
+echo "* Installing Mixy and MixyServer applications..."
+#Make the usr/local/bin dir if necessary and copy MixyServer
+sudo mkdir -p /usr/local/bin
+sudo cp -f ../Builds/MacOSX/build/Release/MixyServer /usr/local/bin
+
+#Copy Mixy
+sudo rm -rf /Applications/Mixy.app
+sudo cp -rf ../Builds/MacOSX/build/Release/Mixy.app /Applications
+
+#Copy Mixy settings
+sudo cp -f Mixy.settings /Users/Shared
+
+#Copy the Mixy launch daemon plist.
+echo "* Installing MixyServer as background process..."
+sudo cp com.*.MixyServer.plist /Library/LaunchDaemons
+sudo chown root:wheel /Library/LaunchDaemons/com.*.MixyServer.plist
+sudo chmod 644 /Library/LaunchDaemons/com.*.MixyServer.plist
+
+#Load the job immediately.
+sudo launchctl load -w /Library/LaunchDaemons/com.andibrae.MixyServer.plist
+
+#Check that the job is running
+result=`ps ax | grep "Mixy*" | grep -v grep`
+
+if [[ -z $result ]]; then
+  echo "Error: MixyServer not detected to be running. It appears the background"
+  echo "process could not be started for some reason. Check for errors above"
+  echo "this message."
+else
+  echo "* MixyServer has been started in the background:"
+  echo "  $result"
+fi
